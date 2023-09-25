@@ -1,41 +1,43 @@
 const myLibrary = [];
+const deleteBtns = [];
 const context = document.querySelector(".context");
 
-function Book (title, author, pages, read) {
+class Book  {
 
+  constructor(title, author, pages, read) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.read = read;
+  }
+    
 
-    this.info = function() {
+    info() {
 
       return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read ? "read it" : "not read yet"}`;
-    };
+    }
 
-    this.saveIndex = function(index) {
-      this.index = index;
-    };
+    set index(index) {
+      this._index = index;
+    }
 
-    this.returnIndex = function() {
-      
-      return this.index;
-    };
-
-    this.saveDeleteButton = function(button) {
-      this.deleteButton = button;
+    set deleteButton(button) {
+      this._deleteButton = button;
     };
     
-    this.returnDeleteButton = function() {
-      return this.deleteButton;
-    };
-
-    this.saveReadButton = function(button) {
-      this.readButton = button;
+    set readButton(button) {
+      this._readButton = button;
     };
     
-    this.returnReadButton = function() {
-      return this.readButton;
+    get deleteButton() {
+      return this._deleteButton;
+    };
+    get index() {
+      return this._index;
+    };
+    
+    get readButton() {
+      return this._readButton;
     };
 
 } 
@@ -76,7 +78,7 @@ confirmBtn.addEventListener("click", (event) => {
   let newBook = new Book(titleValue, authorValue, pagesValue, readValue);
   
   myLibrary.push(newBook);
-  newBook.saveIndex(myLibrary.length-1);
+  newBook.index = myLibrary.length-1;
 
   addBookToUI(myLibrary);
 
@@ -91,25 +93,39 @@ function addBookToUI(library)
   let deleteBtn = document.createElement("button");
   let readBtn = document.createElement("button");
 
-  library[library.length-1].saveDeleteButton(deleteBtn);
-  library[library.length-1].saveReadButton(readBtn);
+  library[library.length-1].deleteButton = deleteBtn;
+  library[library.length-1].readButton = readBtn;
 
   deleteBtn.onclick = function(){
 
+    let temp = 0;
     for (let i = 0; i < library.length; i++)
     {
-      if (library[i].returnDeleteButton() === deleteBtn)
+      if (library[i].deleteButton === deleteBtn)
       {
-        library.splice(library[i].returnIndex(), 1);
+        console.log(`library[i].index: ${library[i].index}`);
+        library.splice(library[i].index, 1);
+        temp = i;
+        break;
       }
     }
 
-      card.remove();
+    for (let i = 0; i < library.length; i++)
+    {
+      console.log(`${library[i].index}: ${library[i].info()}`);
+    }
 
-      for (let i = 0; i < library.length; i++)
-      {
-        console.log(library[i].info());
-      }
+    for (; temp < library.length; temp++)
+    {
+      library[temp].index -= 1;
+    }
+
+    card.remove();
+
+    for (let i = 0; i < library.length; i++)
+    {
+      console.log(`${library[i].index}: ${library[i].info()}`);
+    }
     
   };
 
@@ -117,11 +133,13 @@ function addBookToUI(library)
 
     for (let i = 0; i < library.length; i++)
     {
-      if (library[i].returnReadButton() === readBtn)
+      if (library[i].readButton === readBtn)
       {
         console.log(library[i].read);
+
         library[i].read = !library[i].read;
         cardInfo.textContent = library[i].info();
+
         console.log(library[i].info());
 
       }
@@ -141,7 +159,7 @@ function addBookToUI(library)
   card.appendChild(readBtn);
   context.appendChild(card);
 
-  console.log(library[library.length-1].returnIndex());
+  console.log(library[library.length-1].index);
 
 
 }
