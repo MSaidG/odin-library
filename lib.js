@@ -100,7 +100,6 @@ function addBookToUI(library)
     {
       if (library[i].returnDeleteButton() === deleteBtn)
       {
-        //console.log(library[i].returnDeleteButton());
         library.splice(library[i].returnIndex(), 1);
       }
     }
@@ -120,7 +119,6 @@ function addBookToUI(library)
     {
       if (library[i].returnReadButton() === readBtn)
       {
-        //console.log(library[i].returnDeleteButton());
         console.log(library[i].read);
         library[i].read = !library[i].read;
         cardInfo.textContent = library[i].info();
@@ -129,10 +127,6 @@ function addBookToUI(library)
       }
     }
 
-    // for (let i = 0; i < library.length; i++)
-    // {
-    //   console.log(library[i].info());
-    // }
 
 
   };
@@ -151,61 +145,3 @@ function addBookToUI(library)
 
 
 }
-
-
-
-// // TEST-------------
-// 
-// let theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", true);
-// let theMetro = new Book("The Metro", "Dmitry Glukhovsky", "942", true);
-// 
-// 
-// myLibrary.push(theHobbit);
-// theHobbit.saveIndex(myLibrary.length-1);
-// 
-// myLibrary.push(theMetro);
-// theMetro.saveIndex(myLibrary.length-1);
-// 
-// 
-// 
-// let cardInfo1 = document.createElement("p");
-// let card1 = document.createElement("div");
-// let deleteBtn1 = document.createElement("button");
-// 
-// let cardInfo2 = document.createElement("p");
-// let card2 = document.createElement("div");
-// let deleteBtn2 = document.createElement("button");
-// 
-// myLibrary[0].saveDeleteButton(deleteBtn1);
-// myLibrary[1].saveDeleteButton(deleteBtn2);
-// 
-// deleteBtn1.onclick = function(){
-// 
-//   myLibrary.splice(myLibrary.indexOf(card1), 1);
-//   card1.remove();
-// };
-// 
-// deleteBtn2.onclick = function(){
-// 
-//   myLibrary.splice(myLibrary.indexOf(card2), 1);
-//   card2.remove();
-// };
-// 
-// deleteBtn1.textContent = "DELETE";
-// deleteBtn2.textContent = "DELETE";
-// 
-// card1.classList.add("card");
-// card2.classList.add("card");
-// 
-// cardInfo1.textContent = theHobbit.info();
-// cardInfo2.textContent = theMetro.info();
-// 
-// card1.appendChild(cardInfo1);
-// card1.appendChild(deleteBtn1);
-// 
-// card2.appendChild(cardInfo2);
-// card2.appendChild(deleteBtn2);
-// 
-// 
-// context.appendChild(card1);
-// context.appendChild(card2);
