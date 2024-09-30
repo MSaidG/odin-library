@@ -42,7 +42,6 @@ class Book  {
 
 } 
 
-
 // ADD BOOK UI
 
 const newButton = document.getElementById("showDialog");
@@ -50,41 +49,116 @@ const addBookDialog = document.getElementById("addBookUI");
 const confirmBtn = addBookDialog.querySelector("#confirmBtn");
 const cancelBtn = addBookDialog.querySelector("#cancelBtn");
 
-cancelBtn.addEventListener("click", (event) => {
-  event.preventDefault();
-  addBookDialog.close();
-});
-
 newButton.addEventListener("click", () => {
   addBookDialog.showModal();
+  processDialog()
 });
 
 addBookDialog.addEventListener("close", (e) => {
 });
 
-confirmBtn.addEventListener("click", (event) => {
-  event.preventDefault();
+function checkTitle(title)
+{
+  let titleError = document.querySelector("#title + span.error");
+  if (title.validity.valueMissing)
+  {
+    titleError.textContent = "Do not leave blank!"
+  }
+  else
+  {
+    titleError.textContent = ""
+  }
+}
 
-  let titleValue = document.getElementById("title").value;
-  let authorValue = document.getElementById("author").value;
-  let pagesValue = document.getElementById("pages").value;
-  let readValue = document.getElementById("read").checked;
+function checkAuthor(author)
+{
+  let authorError = document.querySelector("#author + span.error");
+  if (author.validity.valueMissing)
+  {
+    authorError.textContent = "Do not leave blank!"
+  }
+  else
+  {
+    authorError.textContent = ""
+  }
+}
 
-  if (titleValue === ""
-    || authorValue === ""
-    || pagesValue === "") return;
+function checkPages(pages)
+{
+  let pagesError = document.querySelector("#pages + span.error");
+  console.log(pages.validity)
+  if (pages.validity.badInput)
+  {
+    pagesError.textContent = "Please enter a valid number!"
+  }
+  else if (pages.validity.valueMissing)
+  {
+    pagesError.textContent = "Please enter the number of pages in the book!"
+  }
+  else
+  {
+    pagesError.textContent = ""
+  }
+}
+
+function processDialog()
+{
+  let title = document.getElementById("title")
+  let author = document.getElementById("author")
+  let pages = document.getElementById("pages")
+  let read = document.getElementById("read")
+
+  title.addEventListener("input", function() {
+    checkTitle(title)
+  });
+
+  author.addEventListener("input", function() {
+    checkAuthor(author)
+  });
+
+  pages.addEventListener("input", function() {
+    checkPages(pages)
+  });
 
 
-  let newBook = new Book(titleValue, authorValue, pagesValue, readValue);
+  confirmBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+
+    let titleValue = title.value;
+    let authorValue = author.value;
+    let pagesValue = pages.value;
+    let readValue = read.checked;
+
+    console.log(title.validity.valid)
+    if (!title.validity.valid || 
+      !author.validity.valid ||
+      !pages.validity.valid
+    )
+    {
+      checkTitle(title)
+      checkAuthor(author)
+      checkPages(pages)
+      return;
+    }
   
-  myLibrary.push(newBook);
-  newBook.index = myLibrary.length-1;
+  
+    let newBook = new Book(titleValue, authorValue, pagesValue, readValue);
+    
+    myLibrary.push(newBook);
+    newBook.index = myLibrary.length-1;
+  
+    addBookToUI(myLibrary);
+  });
 
-  addBookToUI(myLibrary);
+  cancelBtn.addEventListener("click", (event) => {
+    event.preventDefault();
+    addBookDialog.close();
+  });
+  
+  
+}
 
 
-
-});
 
 function addBookToUI(library)
 {
@@ -144,9 +218,6 @@ function addBookToUI(library)
 
       }
     }
-
-
-
   };
 
   deleteBtn.textContent = "DELETE";

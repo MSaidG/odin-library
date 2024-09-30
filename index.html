@@ -10,16 +10,30 @@
 <body>
     <div>
         <dialog id="addBookUI">
-            <form>
+            <form novalidate>
               <p>
-                <label for="title">Title: </label>
-                <input type="text" name="title" id="title" required>
-                <label for="author">Author: </label>
-                <input type="text" name="author" id="author" required>
-                <label for="pages">Pages: </label>
-                <input type="text" name="pages" id="pages" required>
-                <label for="read">Read it: </label>
-                <input type="checkbox" name="read" id="read" value="false">
+                <label for="title">
+                  <span>Title*:</span>
+                  <input type="text" name="title" id="title" required>
+                  <span class="error" aria-live="polite"></span>
+                </label>
+                <br>
+                <label for="author">
+                  <span>Author*:</span>
+                  <input type="text" name="author" id="author" required>
+                  <span class="error" aria-live="polite"></span>
+                 </label>
+                 <br>
+                <label for="pages">
+                  <span>Number of Pages:</span>
+                  <input type="number" name="pages" id="pages" required>
+                  <span class="error" aria-live="polite"></span>
+                </label>
+                <br>
+                <label for="read"> 
+                  <span>Read:</span>
+                  <input type="checkbox" name="read" id="read" value="false">
+                </label>
               </p>
               <div>
                 <button id="cancelBtn" value="cancel" formmethod="dialog">Cancel</button>

@@ -1,0 +1,42 @@
+label {
+    display: block;
+    align-items: start;
+}
+
+span {
+    display: block;
+}
+
+.error {
+    width: 100%;
+    padding: 0;
+  
+    font-size: 80%;
+    color: white;
+    background-color: #900;
+    border-radius: 0 0 5px 5px;
+  
+    box-sizing: border-box;
+}
+
+input {
+
+    width: 100%;
+    align-items: start;
+    display: flex;
+}
+
+label[for="read"] {
+    display: flex;
+}
+
+input#read {
+    align-self: flex-start;
+    width: 10%;
+    background-color: #900;
+}
+
+
+
+
+  
